@@ -145,7 +145,6 @@ public class Hash implements IHash,Cloneable {
         }
         totalValue = D / size;
         System.out.println("Дисперсия: " + totalValue);
-
     }
     public Hash clone() throws CloneNotSupportedException {
         return (Hash)super.clone();

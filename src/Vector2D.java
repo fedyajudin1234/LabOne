@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.Random;
 
 public class Vector2D implements ObjectBuilder{

@@ -129,7 +129,8 @@ public class Console{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String keyGetter = jIDGetTextField.getText();
-                    System.out.println(hash.get(keyGetter));
+                    int number = Integer.parseInt(keyGetter);
+                    System.out.println(hash.get(number));
                 }
             });
             JButton jRemove = new JButton();
@@ -140,7 +141,8 @@ public class Console{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String keyRemover = jIDGetTextField.getText();
-                    System.out.println(hash.remove(keyRemover));
+                    int number = Integer.parseInt(keyRemover);
+                    System.out.println(hash.remove(number));
                 }
             });
             JButton jSerialize = new JButton();
@@ -243,7 +245,8 @@ public class Console{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String keyGetter = jIDGetTextField.getText();
-                    System.out.println(hash.get(keyGetter));
+                    int number = Integer.parseInt(keyGetter);
+                    System.out.println(hash.get(number));
                 }
             });
             JButton jRemove = new JButton();
@@ -254,7 +257,8 @@ public class Console{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String keyRemover = jIDGetTextField.getText();
-                    System.out.println(hash.remove(keyRemover));
+                    int number = Integer.parseInt(keyRemover);
+                    System.out.println(hash.remove(number));
                 }
             });
             JButton jSerialize = new JButton();
