@@ -92,17 +92,8 @@ public class Console{
                         factory = new ObjectFactory(stringObjectBuilder);
                     }
                     factory.getBuilderByName("String");
-                    hash.sizeRecorder();
                     // увеличение хэш-таблицы
-                    while(hash.currValue > hash.totalValue){
-                        size = size * 2;
-                        hash = new Hash(size);
-                        hash.insert(hash1);
-                        for(int i = 0; i < number; i++){
-                            hash = hash1.insert(hash);
-                        }
-                        hash.sizeRecorder();
-                    }
+                    hash = hash.resizeHash(hash,hash1,number);
                 }
             });
             JLabel jIDGetLable = new JLabel("ID: ");
@@ -208,17 +199,7 @@ public class Console{
                         factory = new ObjectFactory(vector2D);
                     }
                     factory.getBuilderByName("Vector2D");
-                    hash.sizeRecorder();
-                    // увеличение хэш-таблицы
-                    while(hash.currValue > hash.totalValue){
-                        size = size * 2;
-                        hash = new Hash(size);
-                        hash.insert(hash1);
-                        for(int i = 0; i < number; i++){
-                            hash = hash1.insert(hash);
-                        }
-                        hash.sizeRecorder();
-                    }
+                    hash = hash.resizeHash(hash,hash1,number);
                 }
             });
             JLabel jIDGetLable = new JLabel("ID: ");

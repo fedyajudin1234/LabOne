@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Hash implements IHash,Cloneable {
     public int size;
@@ -116,35 +117,32 @@ public class Hash implements IHash,Cloneable {
     }
     void sizeRecorder() {
         int middleValue = 0;
-        int generalValue = 0;
-        int deviation = 0;
-        int D = 0;
+        ArrayList<Integer> arrayList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             Entry e = array[i];
-            Entry entry = e;
             currValue = 0;
-            while(entry != null){
-                while(entry != null){
-                    stringLengthCounter++;
-                    break;
-                }
-                //System.out.println(stringLengthCounter);
-                //System.out.println(entry);
-                entry = entry.next;
+            while(e != null){
+                stringLengthCounter++;
+                e = e.next;
                 currValue = stringLengthCounter;
             }
-            ArrayList<Integer> arrayList = new ArrayList<>();
             arrayList.add(currValue);
-            generalValue = currValue / size;
-            middleValue = currValue - generalValue;
-            deviation = middleValue * middleValue;
-            D += deviation;
-            //System.out.println(D);
+            middleValue += currValue;
             //System.out.println(arrayList);
             stringLengthCounter = 0;
+            //System.out.println("Итерация: " + i);
         }
-        totalValue = D / size;
-        System.out.println("Дисперсия: " + totalValue);
+        int min = Collections.min(arrayList);
+        int max = Collections.max(arrayList);
+        middleValue = middleValue / size;
+        totalValue = (max - min) - middleValue;
+        System.out.println("------------------------------");
+        System.out.println("Минимальное значение: " + min);
+        System.out.println("Максимальное значение: " + max);
+        System.out.println("Среднее значение: " + middleValue);
+        System.out.println("Значение, которое мы берём для увеличения хэш-таблицы((макс - мин) - ср.знач): " + totalValue);
+        System.out.println("Для просмотра, по окончании итераций хэш-таблицы, нажмите Hash");
+        System.out.println("------------------------------");
     }
     public Hash clone() throws CloneNotSupportedException {
         return (Hash)super.clone();
@@ -152,16 +150,23 @@ public class Hash implements IHash,Cloneable {
     Hash insert(Hash hash){
         for (int i = 0; i < size; i++) {
             Entry e = array[i];
-            Entry entry = e;
-            while(entry != null){
-                while(entry != null){
-                    hash.put(entry.key,entry.value);
-                    break;
-                }
-                //hash.put(entry.key,entry.value);
-                entry = entry.next;
+            while(e != null){
+                hash.put(e.key,e.value);
+                e = e.next;
 
             }
+        }
+        return hash;
+    }
+    Hash resizeHash(Hash hash, Hash hash1, int number){
+        hash.sizeRecorder();
+        while(hash.currValue > hash.totalValue){
+            size = size * 2;
+            hash = new Hash(size);
+            for(int i = 0; i < number; i++){
+                hash = hash1.insert(hash);
+            }
+            hash.sizeRecorder();
         }
         return hash;
     }
