@@ -79,21 +79,19 @@ public class Console{
             jGenerate.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    long start = System.currentTimeMillis();
                     String numberValue = jNumberTextField.getText();
                     int number = Integer.parseInt(numberValue);
                     StringObjectBuilder stringObjectBuilder = new StringObjectBuilder();
                     for(int i = 0; i < number; i++){
                         hash.put(new IntObjectBuilder().create(),stringObjectBuilder.create());
-                        try {
-                            hash1 = hash.clone();
-                        } catch (CloneNotSupportedException ex) {
-                            throw new RuntimeException(ex);
-                        }
                         factory = new ObjectFactory(stringObjectBuilder);
                     }
                     factory.getBuilderByName("String");
                     // увеличение хэш-таблицы
                     hash = hash.resizeHash(hash,hash1,number);
+                    long finish = System.currentTimeMillis() - start;
+                    System.out.println("Время выполнения: " + finish);
                 }
             });
             JLabel jIDGetLable = new JLabel("ID: ");
@@ -187,19 +185,17 @@ public class Console{
             jGenerate.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    long start = System.currentTimeMillis();
                     String numberValue = jNumberTextField.getText();
                     int number = Integer.parseInt(numberValue);
                     for(int i = 0; i < number; i++){
                         hash.put(new IntObjectBuilder().create(),vector2D.create());
-                        try {
-                            hash1 = hash.clone();
-                        } catch (CloneNotSupportedException ex) {
-                            throw new RuntimeException(ex);
-                        }
                         factory = new ObjectFactory(vector2D);
                     }
                     factory.getBuilderByName("Vector2D");
                     hash = hash.resizeHash(hash,hash1,number);
+                    long finish = System.currentTimeMillis() - start;
+                    System.out.println("Время выполнения: " + finish);
                 }
             });
             JLabel jIDGetLable = new JLabel("ID: ");

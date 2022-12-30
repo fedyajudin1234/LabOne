@@ -1,4 +1,5 @@
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,6 +8,7 @@ public class Hash implements IHash,Cloneable {
     int stringLengthCounter;
     int currValue;
     int totalValue;
+    int maxValue;
     private class Entry{
         private Object key;
         private Object value;
@@ -122,27 +124,25 @@ public class Hash implements IHash,Cloneable {
             Entry e = array[i];
             currValue = 0;
             while(e != null){
-                stringLengthCounter++;
+                currValue++;
                 e = e.next;
-                currValue = stringLengthCounter;
             }
             arrayList.add(currValue);
             middleValue += currValue;
-            //System.out.println(arrayList);
-            stringLengthCounter = 0;
-            //System.out.println("Итерация: " + i);
         }
         int min = Collections.min(arrayList);
         int max = Collections.max(arrayList);
         middleValue = middleValue / size;
         totalValue = (max - min) - middleValue;
-        System.out.println("------------------------------");
+        maxValue = max;
+        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("Размер таблицы: " + size);
         System.out.println("Минимальное значение: " + min);
         System.out.println("Максимальное значение: " + max);
         System.out.println("Среднее значение: " + middleValue);
         System.out.println("Значение, которое мы берём для увеличения хэш-таблицы((макс - мин) - ср.знач): " + totalValue);
         System.out.println("Для просмотра, по окончании итераций хэш-таблицы, нажмите Hash");
-        System.out.println("------------------------------");
+        System.out.println("----------------------------------------------------------------------------------");
     }
     public Hash clone() throws CloneNotSupportedException {
         return (Hash)super.clone();
@@ -160,13 +160,18 @@ public class Hash implements IHash,Cloneable {
     }
     Hash resizeHash(Hash hash, Hash hash1, int number){
         hash.sizeRecorder();
-        while(hash.currValue > hash.totalValue){
-            size = size * 2;
-            hash = new Hash(size);
-            for(int i = 0; i < number; i++){
-                hash = hash1.insert(hash);
+        if(hash.maxValue > hash.totalValue){
+            try {
+                hash1 = hash.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
             }
-            hash.sizeRecorder();
+            while(hash.maxValue > hash.totalValue){
+                size = size * 2;
+                hash = new Hash(size);
+                hash = hash1.insert(hash);
+                hash.sizeRecorder();
+            }
         }
         return hash;
     }
